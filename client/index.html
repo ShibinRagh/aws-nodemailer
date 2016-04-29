@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body ng-app="myApp">
+   <!-- <form action="/" method="post"> 
+    <input type="text" name="name">
+    <input type="email" name="email">
+    <input type="submit">
+    </form>-->
+    
+    <form name="userForm"  ng-controller="contactCtrl">
+        <input type="text" name="name" class="form-control" ng-model="formData.name" required>
+        <input type="email" name="email" class="form-control" ng-model="formData.email">
+        <button type="submit" class="btn btn-primary"  ng-click="formSubmit()">Submit</button>
+    </form>
+</body>
+
+<script src="http://code.angularjs.org/1.2.6/angular.js"></script>
+<script type="text/javascript">
+    var myApp = angular.module('myApp',[]);
+    myApp.controller('contactCtrl', function($scope, $http){
+        $scope.formSubmit = function(){
+            console.log($scope.formData);
+            $http.post('/contact', $scope.formData ).success(function(data, status, headers, config){
+                console.log( data.message);
+            }).error(function(data, status, headers, config){
+                console.log( data.message);
+            });
+        }
+    });
+</script>
+</html>
